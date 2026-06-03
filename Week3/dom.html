@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Manipulation – Alnoor Store</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            padding: 20px 48px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a7a3c;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span { color: #111; }
+
+        .topbar-link { font-size: 13px; color: #555; }
+        .topbar-link a { color: #1a7a3c; text-decoration: none; font-weight: 600; }
+
+        .page-header {
+            padding: 48px 48px 0;
+        }
+
+        .page-header .tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #1a7a3c;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            font-weight: 700;
+            color: #111;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px 48px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .demo-card {
+            border: 1.5px solid #f0f0f0;
+            border-radius: 12px;
+            padding: 28px;
+        }
+
+        .demo-card h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 6px;
+        }
+
+        .demo-card p {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Inputs */
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid #e8e8e8;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #111;
+            background: #fafafa;
+            transition: all 0.2s;
+            margin-bottom: 10px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #1a7a3c;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(26,122,60,0.08);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .btn-green {
+            background: #1a7a3c;
+            color: white;
+        }
+
+        .btn-green:hover { background: #155f30; }
+
+        .btn-outline {
+            background: transparent;
+            color: #1a7a3c;
+            border: 1.5px solid #1a7a3c;
+        }
+
+        .btn-outline:hover { background: #f7fcf9; }
+
+        .btn-gray {
+            background: #f4f4f4;
+            color: #555;
+        }
+
+        .btn-gray:hover { background: #eaeaea; }
+
+        /* Preview box */
+        .preview-box {
+            background: #f7fcf9;
+            border: 1.5px solid #e0f0e8;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 14px;
+            color: #333;
+            min-height: 50px;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        /* Dynamic menu */
+        .menu-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .menu-list li {
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #333;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: 1.5px solid #f0f0f0;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-list li:hover { background: #f7fcf9; border-color: #1a7a3c; }
+
+        .menu-list li.active {
+            background: #1a7a3c;
+            color: white;
+            border-color: #1a7a3c;
+        }
+
+        .menu-badge {
+            font-size: 11px;
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        /* Counter */
+        .counter-display {
+            font-size: 48px;
+            font-weight: 700;
+            color: #1a7a3c;
+            text-align: center;
+            padding: 20px 0;
+            letter-spacing: -2px;
+        }
+
+        /* Toggle box */
+        .toggle-box {
+            background: #f7fcf9;
+            border: 1.5px solid #e0f0e8;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Color box */
+        .color-box {
+            width: 100%;
+            height: 60px;
+            border-radius: 8px;
+            margin-top: 10px;
+            background: #1a7a3c;
+            transition: background 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 18px 48px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer p { font-size: 12px; color: #bbb; }
+
+        footer nav a {
+            font-size: 12px;
+            color: #bbb;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        footer nav a:hover { color: #1a7a3c; }
+
+        @media (max-width: 768px) {
+            .content { grid-template-columns: 1fr; }
+            .topbar, .page-header, .content, footer { padding-left: 24px; padding-right: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+    <div class="logo">alnoor<span>store</span></div>
+    <div class="topbar-link"><a href="index.html">← Back to home</a></div>
+</div>
+
+<!-- Page header -->
+<div class="page-header">
+    <div class="tag">Week 3 – DOM Manipulation</div>
+    <h1>JavaScript DOM Demo</h1>
+    <p>Interactive examples showing how JavaScript manipulates webpage content dynamically.</p>
+</div>
+
+<!-- Demo cards -->
+<div class="content">
+
+    <!-- Demo 1: Live text preview -->
+    <div class="demo-card">
+        <h3>Live Text Preview</h3>
+        <p>Type below and watch the preview update in real time — no page reload needed.</p>
+        <input type="text" id="liveInput" placeholder="Type a product name...">
+        <div class="preview-box" id="livePreview">Your text will appear here...</div>
+    </div>
+
+    <!-- Demo 2: Dynamic menu -->
+    <div class="demo-card">
+        <h3>Dynamic Category Menu</h3>
+        <p>Click a category to select it. The active item updates instantly via DOM manipulation.</p>
+        <ul class="menu-list" id="categoryMenu">
+            <li onclick="selectCategory(this)" class="active">All Products <span class="menu-badge">142</span></li>
+            <li onclick="selectCategory(this)">Fashion <span class="menu-badge">38</span></li>
+            <li onclick="selectCategory(this)">Electronics <span class="menu-badge">54</span></li>
+            <li onclick="selectCategory(this)">Home & Living <span class="menu-badge">29</span></li>
+            <li onclick="selectCategory(this)">Groceries <span class="menu-badge">21</span></li>
+        </ul>
+    </div>
+
+    <!-- Demo 3: Show / hide -->
+    <div class="demo-card">
+        <h3>Show / Hide Element</h3>
+        <p>Toggle visibility of content using JavaScript — useful for dropdowns, modals, and filters.</p>
+        <button class="btn btn-green" onclick="toggleBox()">Toggle Details</button>
+        <div class="toggle-box" id="toggleBox">
+            <strong>Alnoor Store</strong> — BIT3208 Capstone Project<br>
+            This panel was shown/hidden using JavaScript's <code>style.display</code> property.
+            DOM manipulation allows dynamic UI without reloading the page.
+        </div>
+    </div>
+
+    <!-- Demo 4: Click counter -->
+    <div class="demo-card">
+        <h3>Cart Item Counter</h3>
+        <p>Simulates adding and removing items from a cart using JavaScript variables and DOM updates.</p>
+        <div class="counter-display" id="counterDisplay">0</div>
+        <div style="text-align:center;">
+            <button class="btn btn-green" onclick="changeCount(1)">+ Add item</button>
+            <button class="btn btn-outline" onclick="changeCount(-1)">− Remove</button>
+            <button class="btn btn-gray" onclick="resetCount()">Reset</button>
+        </div>
+    </div>
+
+    <!-- Demo 5: Color changer -->
+    <div class="demo-card">
+        <h3>Dynamic Color Theme</h3>
+        <p>Change the banner color dynamically — simulates theme switching or sale banner updates.</p>
+        <button class="btn btn-green" onclick="changeColor('#1a7a3c', 'Alnoor Green')">Green</button>
+        <button class="btn btn-gray" onclick="changeColor('#2c3e50', 'Midnight Blue')">Dark</button>
+        <button class="btn btn-gray" onclick="changeColor('#e67e22', 'Sale Orange')">Orange</button>
+        <button class="btn btn-gray" onclick="changeColor('#8e44ad', 'Premium Purple')">Purple</button>
+        <div class="color-box" id="colorBox">Alnoor Green</div>
+    </div>
+
+    <!-- Demo 6: Live character count -->
+    <div class="demo-card">
+        <h3>Product Review Input</h3>
+        <p>Live character counter — shows DOM updating on every keystroke.</p>
+        <textarea id="reviewText" rows="4" placeholder="Write your product review..." maxlength="200"></textarea>
+        <div class="preview-box" id="charCount">0 / 200 characters used</div>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>© 2025 Alnoor Store. All rights reserved.</p>
+    <nav>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Contact</a>
+    </nav>
+</footer>
+
+<script>
+    // Demo 1 – Live text preview
+    document.getElementById('liveInput').addEventListener('input', function () {
+        const preview = document.getElementById('livePreview');
+        preview.textContent = this.value.length > 0 ? this.value : 'Your text will appear here...';
+    });
+
+    // Demo 2 – Dynamic menu
+    function selectCategory(el) {
+        document.querySelectorAll('#categoryMenu li').forEach(function (li) {
+            li.classList.remove('active');
+        });
+        el.classList.add('active');
+    }
+
+    // Demo 3 – Show / hide
+    function toggleBox() {
+        const box = document.getElementById('toggleBox');
+        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Demo 4 – Counter
+    let count = 0;
+
+    function changeCount(amount) {
+        count += amount;
+        if (count < 0) count = 0;
+        document.getElementById('counterDisplay').textContent = count;
+    }
+
+    function resetCount() {
+        count = 0;
+        document.getElementById('counterDisplay').textContent = 0;
+    }
+
+    // Demo 5 – Color changer
+    function changeColor(hex, name) {
+        const box = document.getElementById('colorBox');
+        box.style.background = hex;
+        box.textContent = name;
+    }
+
+    // Demo 6 – Character count
+    document.getElementById('reviewText').addEventListener('input', function () {
+        const used = this.value.length;
+        document.getElementById('charCount').textContent = used + ' / 200 characters used';
+    });
+</script>
+
+</body>
+</html>

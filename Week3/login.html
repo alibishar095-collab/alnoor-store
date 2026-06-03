@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – Alnoor Store</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── Top bar ── */
+        .topbar {
+            padding: 20px 48px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a7a3c;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #111;
+        }
+
+        .topbar-link {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .topbar-link a {
+            color: #1a7a3c;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ── Main split layout ── */
+        .main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        /* Left panel */
+        .left-panel {
+            background: #f7fcf9;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 64px 56px;
+            border-right: 1px solid #f0f0f0;
+        }
+
+        .left-panel .tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #1a7a3c;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .left-panel h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #111;
+            line-height: 1.2;
+            margin-bottom: 18px;
+            letter-spacing: -1px;
+        }
+
+        .left-panel h1 span {
+            color: #1a7a3c;
+        }
+
+        .left-panel p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.8;
+            max-width: 340px;
+        }
+
+        .features {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #444;
+        }
+
+        .feature-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #1a7a3c;
+            flex-shrink: 0;
+        }
+
+        /* Right panel – form */
+        .right-panel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 64px 56px;
+        }
+
+        .form-box {
+            width: 100%;
+            max-width: 360px;
+        }
+
+        .form-box h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .form-box .subtitle {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 36px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 7px;
+            letter-spacing: 0.3px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid #e8e8e8;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #111;
+            background: #fafafa;
+            transition: all 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1a7a3c;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(26,122,60,0.08);
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 11px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 44px;
+        }
+
+        .toggle-pw {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 13px;
+            color: #aaa;
+            user-select: none;
+        }
+
+        /* Strength bar */
+        .strength-bar {
+            height: 3px;
+            border-radius: 4px;
+            margin-top: 8px;
+            background: #eee;
+            transition: all 0.3s;
+        }
+
+        .strength-text {
+            font-size: 11px;
+            color: #aaa;
+            margin-top: 4px;
+        }
+
+        .forgot {
+            text-align: right;
+            margin-top: -12px;
+            margin-bottom: 20px;
+        }
+
+        .forgot a {
+            font-size: 12px;
+            color: #1a7a3c;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 13px;
+            background: #1a7a3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.3px;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn-primary:hover {
+            background: #155f30;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.99);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .divider hr {
+            flex: 1;
+            border: none;
+            border-top: 1px solid #eee;
+        }
+
+        .divider span {
+            font-size: 12px;
+            color: #bbb;
+        }
+
+        .register-link {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .register-link a {
+            color: #1a7a3c;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* Footer */
+        footer {
+            padding: 18px 48px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer p {
+            font-size: 12px;
+            color: #bbb;
+        }
+
+        footer nav a {
+            font-size: 12px;
+            color: #bbb;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        footer nav a:hover { color: #1a7a3c; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main { grid-template-columns: 1fr; }
+            .left-panel { display: none; }
+            .topbar { padding: 16px 24px; }
+            .right-panel { padding: 40px 24px; }
+            footer { padding: 16px 24px; flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+    <div class="logo">alnoor<span>store</span></div>
+    <div class="topbar-link">Back to <a href="index.html">Home</a></div>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+    <!-- Left panel -->
+    <div class="left-panel">
+        <div class="tag">Alnoor Store</div>
+        <h1>Shop smarter,<br>live <span>better.</span></h1>
+        <p>Your one-stop destination for quality products across fashion, electronics, home essentials and more.</p>
+        <div class="features">
+            <div class="feature-item">
+                <div class="feature-dot"></div>
+                Fast & reliable delivery across Kenya
+            </div>
+            <div class="feature-item">
+                <div class="feature-dot"></div>
+                Secure checkout with M-Pesa & card
+            </div>
+            <div class="feature-item">
+                <div class="feature-dot"></div>
+                Thousands of verified products
+            </div>
+            <div class="feature-item">
+                <div class="feature-dot"></div>
+                24/7 customer support
+            </div>
+        </div>
+    </div>
+
+    <!-- Right panel -->
+    <div class="right-panel">
+        <div class="form-box">
+            <h2>Sign in</h2>
+            <p class="subtitle">Welcome back — enter your details below</p>
+
+            <form id="loginForm" action="form_process.php" method="POST" novalidate>
+
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="text" id="email" name="email" placeholder="you@example.com">
+                    <span class="error" id="emailError">Please enter a valid email address.</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" placeholder="Enter your password">
+                        <span class="toggle-pw" id="togglePw">Show</span>
+                    </div>
+                    <div class="strength-bar" id="strengthBar"></div>
+                    <div class="strength-text" id="strengthText"></div>
+                    <span class="error" id="passwordError">Password must be at least 6 characters.</span>
+                </div>
+
+                <div class="forgot">
+                    <a href="#">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary">Sign in</button>
+
+            </form>
+
+            <div class="divider">
+                <hr><span>or</span><hr>
+            </div>
+
+            <div class="register-link">
+                Don't have an account? <a href="register.html">Create one</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>© 2025 Alnoor Store. All rights reserved.</p>
+    <nav>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Contact</a>
+    </nav>
+</footer>
+
+<script src="validation.js"></script>
+
+</body>
+</html>
