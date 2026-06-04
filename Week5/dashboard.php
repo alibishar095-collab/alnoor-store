@@ -40,22 +40,21 @@ $homePath   = "index.php";
         <a href="dashboard.php" class="sidebar-item active">
             <span class="icon">📊</span> Dashboard
         </a>
-        <a href="#" class="sidebar-item">
+        <a href="products/index.php" class="sidebar-item">
             <span class="icon">📦</span> Products
         </a>
-        <a href="#" class="sidebar-item">
-            <span class="icon">🛒</span> Orders
+        <?php if($_SESSION['user_role'] === 'admin'): ?>
+        <a href="products/add.php" class="sidebar-item">
+            <span class="icon">➕</span> Add Product
         </a>
-        <a href="#" class="sidebar-item">
+        <?php endif; ?>
+        <a href="index.php" class="sidebar-item">
+            <span class="icon">🏪</span> Storefront
+        </a>
+        <a href="register.php" class="sidebar-item">
             <span class="icon">👥</span> Customers
         </a>
-        <a href="#" class="sidebar-item">
-            <span class="icon">📈</span> Reports
-        </a>
         <hr class="sidebar-divider">
-        <a href="#" class="sidebar-item">
-            <span class="icon">⚙️</span> Settings
-        </a>
         <a href="logout.php" class="sidebar-item" style="color:#c0392b;">
             <span class="icon">🚪</span> Logout
         </a>
@@ -82,10 +81,14 @@ $homePath   = "index.php";
                 <div class="stat-label">Orders</div>
                 <div class="stat-value">142</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Products</div>
-                <div class="stat-value"><?php echo $total_products; ?></div>
-            </div>
+            <a href="products/index.php" style="text-decoration:none;">
+                <div class="stat-card" style="cursor:pointer;"
+                     onmouseover="this.style.borderColor='#1a7a3c'"
+                     onmouseout="this.style.borderColor='#f0f0f0'">
+                    <div class="stat-label">Products</div>
+                    <div class="stat-value"><?php echo $total_products; ?></div>
+                </div>
+            </a>
             <div class="stat-card">
                 <div class="stat-label">Customers</div>
                 <div class="stat-value"><?php echo $total_users; ?></div>
@@ -134,7 +137,12 @@ $homePath   = "index.php";
         <!-- Products table -->
         <div style="margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
             <p style="font-size:14px; font-weight:700; color:#111;">Product Inventory</p>
-            <span class="badge badge-info">Live from database</span>
+            <div style="display:flex; gap:10px; align-items:center;">
+                <span class="badge badge-info">Live from database</span>
+                <?php if($_SESSION['user_role'] === 'admin'): ?>
+                    <a href="products/add.php" class="btn btn-primary btn-sm">+ Add product</a>
+                <?php endif; ?>
+            </div>
         </div>
 
         <div class="table-wrapper">
@@ -145,11 +153,18 @@ $homePath   = "index.php";
                         <th>Category</th>
                         <th>Price</th>
                         <th>Stock</th>
+                        <?php if($_SESSION['user_role'] === 'admin'): ?>
+                            <th>Actions</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if(mysqli_num_rows($products) > 0): ?>
-                        <?php while($product = mysqli_fetch_assoc($products)): ?>
+                        <?php
+                        // Re-fetch with ID for edit/delete links
+                        $products_with_id = mysqli_query($conn, "SELECT * FROM products ORDER BY id DESC LIMIT 5");
+                        while($product = mysqli_fetch_assoc($products_with_id)):
+                        ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($product['name']); ?></td>
                                 <td><?php echo htmlspecialchars($product['category']); ?></td>
@@ -159,15 +174,35 @@ $homePath   = "index.php";
                                         <?php echo $product['stock']; ?> units
                                     </span>
                                 </td>
+                                <?php if($_SESSION['user_role'] === 'admin'): ?>
+                                    <td style="display:flex; gap:8px;">
+                                        <a href="products/edit.php?id=<?php echo $product['id']; ?>"
+                                           class="btn btn-sm"
+                                           style="background:#f0f6ff; color:#2980b9; text-decoration:none;">Edit</a>
+                                        <a href="products/delete.php?id=<?php echo $product['id']; ?>"
+                                           class="btn btn-sm btn-danger"
+                                           style="text-decoration:none;"
+                                           onclick="return confirm('Delete this product?')">Delete</a>
+                                    </td>
+                                <?php endif; ?>
                             </tr>
                         <?php endwhile; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="4" style="text-align:center; color:#888;">No products found.</td>
+                            <td colspan="5" style="text-align:center; color:#888;">No products found.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
+        </div>
+
+        <!-- Quick links -->
+        <div style="margin-top:32px; display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="products/index.php" class="btn btn-outline">View all products</a>
+            <a href="index.php" class="btn btn-gray">Go to storefront</a>
+            <?php if($_SESSION['user_role'] === 'admin'): ?>
+                <a href="products/add.php" class="btn btn-primary">+ Add new product</a>
+            <?php endif; ?>
         </div>
 
     </div>
