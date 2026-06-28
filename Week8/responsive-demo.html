@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Demo – Alnoor Store</title>
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<!-- Screen size indicator -->
+<div class="screen-indicator">
+    Screen: <span class="bp-label bp-mobile">📱 Mobile</span>
+             <span class="bp-label bp-tablet">📟 Tablet</span>
+             <span class="bp-label bp-desktop">🖥️ Desktop</span>
+</div>
+
+<!-- Topbar -->
+<div class="rwd-topbar">
+    <a href="#" class="rwd-logo">alnoor<span>store</span></a>
+
+    <!-- Hamburger (mobile only) -->
+    <div class="hamburger" id="hamburger" onclick="toggleNav()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Nav -->
+    <nav class="rwd-nav" id="rwd-nav">
+        <a href="#">Home</a>
+        <a href="#">Products</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="login.php" style="color:#1a7a3c; font-weight:600;">Sign in</a>
+    </nav>
+</div>
+
+<!-- Hero -->
+<div class="rwd-hero">
+    <div>
+        <div class="tag">Welcome to Alnoor Store</div>
+        <h1>Quality products <span>great prices.</span></h1>
+        <p>Shop thousands of products across fashion, electronics, home essentials, groceries and more  delivered right to your door.</p>
+        <div class="rwd-hero-actions">
+            <a href="products/index.php" class="btn-rwd btn-rwd-primary">Shop now</a>
+            <a href="#demo" class="btn-rwd btn-rwd-outline">Create account</a>
+        </div>
+    </div>
+    <div class="rwd-stats" style="padding:0; border:none;">
+        <div class="rwd-stat">
+            <div class="value">500+</div>
+            <div class="label">Products</div>
+        </div>
+        <div class="rwd-stat">
+            <div class="value">24/7</div>
+            <div class="label">Support</div>
+        </div>
+        <div class="rwd-stat">
+            <div class="value">Fast</div>
+            <div class="label">Delivery</div>
+        </div>
+        <div class="rwd-stat">
+            <div class="value">100%</div>
+            <div class="label">Secure</div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats bar -->
+<div class="rwd-stats" id="demo">
+    <div class="rwd-stat">
+        <div class="value">500+</div>
+        <div class="label">Products</div>
+    </div>
+    <div class="rwd-stat">
+        <div class="value">24/7</div>
+        <div class="label">Support</div>
+    </div>
+    <div class="rwd-stat">
+        <div class="value">Fast</div>
+        <div class="label">Delivery</div>
+    </div>
+    <div class="rwd-stat">
+        <div class="value">100%</div>
+        <div class="label">Secure</div>
+    </div>
+</div>
+
+<!-- Breakpoints explanation -->
+<div style="padding: 24px 20px; background: #f7fcf9; border-bottom: 1px solid #f0f0f0;">
+    <h2 style="font-size:16px; font-weight:700; color:#111; margin-bottom:16px;">
+        Media Query Breakpoints Used
+    </h2>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px;">
+        <div style="border:1.5px solid #fce4e4; border-radius:10px; padding:16px; background:#fff;">
+            <div style="font-size:11px; font-weight:700; color:#e74c3c; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">📱 Mobile</div>
+            <div style="font-size:13px; font-weight:600; color:#111; margin-bottom:4px;">0px – 767px</div>
+            <div style="font-size:12px; color:#888; line-height:1.5;">Single column layout. Hamburger menu. Stacked content.</div>
+            <div style="margin-top:8px; font-size:11px; color:#e74c3c; font-family:monospace;">Default styles (no query)</div>
+        </div>
+        <div style="border:1.5px solid #fef9e7; border-radius:10px; padding:16px; background:#fff;">
+            <div style="font-size:11px; font-weight:700; color:#f39c12; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">📟 Tablet</div>
+            <div style="font-size:13px; font-weight:600; color:#111; margin-bottom:4px;">768px – 1023px</div>
+            <div style="font-size:12px; color:#888; line-height:1.5;">Two column grid. Horizontal nav. Split hero.</div>
+            <div style="margin-top:8px; font-size:11px; color:#f39c12; font-family:monospace;">@media (min-width: 768px)</div>
+        </div>
+        <div style="border:1.5px solid #eaf3de; border-radius:10px; padding:16px; background:#fff;">
+            <div style="font-size:11px; font-weight:700; color:#1a7a3c; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">🖥️ Desktop</div>
+            <div style="font-size:13px; font-weight:600; color:#111; margin-bottom:4px;">1024px – 1439px</div>
+            <div style="font-size:12px; color:#888; line-height:1.5;">Four column grid. Full nav. Expanded hero.</div>
+            <div style="margin-top:8px; font-size:11px; color:#1a7a3c; font-family:monospace;">@media (min-width: 1024px)</div>
+        </div>
+        <div style="border:1.5px solid #f0f6ff; border-radius:10px; padding:16px; background:#fff;">
+            <div style="font-size:11px; font-weight:700; color:#2980b9; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">🖥️ Large</div>
+            <div style="font-size:13px; font-weight:600; color:#111; margin-bottom:4px;">1440px+</div>
+            <div style="font-size:12px; color:#888; line-height:1.5;">Max-width container. Centered layout.</div>
+            <div style="margin-top:8px; font-size:11px; color:#2980b9; font-family:monospace;">@media (min-width: 1440px)</div>
+        </div>
+    </div>
+</div>
+
+<!-- Categories -->
+<div class="rwd-categories">
+    <h2>Browse Categories</h2>
+    <div class="rwd-cat-pills">
+        <a href="#" class="cat-pill active">All Products</a>
+        <a href="#" class="cat-pill">Fashion</a>
+        <a href="#" class="cat-pill">Electronics</a>
+        <a href="#" class="cat-pill">Home & Living</a>
+        <a href="#" class="cat-pill">Groceries</a>
+    </div>
+</div>
+
+<!-- Products grid -->
+<div class="rwd-products">
+    <h2>Featured Products
+        <span style="font-size:12px; font-weight:400; color:#888; margin-left:10px;">
+            (Grid changes: 1 col → 2 col → 4 col based on screen size)
+        </span>
+    </h2>
+    <div class="rwd-grid">
+
+        <div class="rwd-card">
+            <div class="rwd-card-img">💻</div>
+            <div class="rwd-card-body">
+                <div class="rwd-card-cat">Electronics</div>
+                <div class="rwd-card-name">Wireless Headphones</div>
+                <div class="rwd-card-desc">High quality over-ear headphones</div>
+                <div class="rwd-card-footer">
+                    <div class="rwd-card-price">KSh 3,500</div>
+                    <a href="login.php" class="rwd-card-btn">Buy</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="rwd-card">
+            <div class="rwd-card-img">👗</div>
+            <div class="rwd-card-body">
+                <div class="rwd-card-cat">Fashion</div>
+                <div class="rwd-card-name">Men's Polo Shirt</div>
+                <div class="rwd-card-desc">Premium cotton polo shirt</div>
+                <div class="rwd-card-footer">
+                    <div class="rwd-card-price">KSh 1,200</div>
+                    <a href="login.php" class="rwd-card-btn">Buy</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="rwd-card">
+            <div class="rwd-card-img">🏠</div>
+            <div class="rwd-card-body">
+                <div class="rwd-card-cat">Home & Living</div>
+                <div class="rwd-card-name">Rice Cooker 1.8L</div>
+                <div class="rwd-card-desc">Automatic electric rice cooker</div>
+                <div class="rwd-card-footer">
+                    <div class="rwd-card-price">KSh 2,800</div>
+                    <a href="login.php" class="rwd-card-btn">Buy</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="rwd-card">
+            <div class="rwd-card-img">🛒</div>
+            <div class="rwd-card-body">
+                <div class="rwd-card-cat">Groceries</div>
+                <div class="rwd-card-name">Basmati Rice 5kg</div>
+                <div class="rwd-card-desc">Premium long grain basmati rice</div>
+                <div class="rwd-card-footer">
+                    <div class="rwd-card-price">KSh 950</div>
+                    <a href="login.php" class="rwd-card-btn">Buy</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="rwd-card">
+            <div class="rwd-card-img">⌚</div>
+            <div class="rwd-card-body">
+                <div class="rwd-card-cat">Electronics</div>
+                <div class="rwd-card-name">Smart Watch</div>
+                <div class="rwd-card-desc">Fitness tracking smart watch</div>
+                <div class="rwd-card-footer">
+                    <div class="rwd-card-price">KSh 4,500</div>
+                    <a href="login.php" class="rwd-card-btn">Buy</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="rwd-card">
+            <div class="rwd-card-img">👜</div>
+            <div class="rwd-card-body">
+                <div class="rwd-card-cat">Fashion</div>
+                <div class="rwd-card-name">Ladies Handbag</div>
+                <div class="rwd-card-desc">Genuine leather handbag</div>
+                <div class="rwd-card-footer">
+                    <div class="rwd-card-price">KSh 2,200</div>
+                    <a href="login.php" class="rwd-card-btn">Buy</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="rwd-card">
+            <div class="rwd-card-img">🕐</div>
+            <div class="rwd-card-body">
+                <div class="rwd-card-cat">Home & Living</div>
+                <div class="rwd-card-name">Wall Clock</div>
+                <div class="rwd-card-desc">Modern minimalist wall clock</div>
+                <div class="rwd-card-footer">
+                    <div class="rwd-card-price">KSh 850</div>
+                    <a href="login.php" class="rwd-card-btn">Buy</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="rwd-card">
+            <div class="rwd-card-img">🍶</div>
+            <div class="rwd-card-body">
+                <div class="rwd-card-cat">Groceries</div>
+                <div class="rwd-card-name">Cooking Oil 5L</div>
+                <div class="rwd-card-desc">Pure sunflower cooking oil</div>
+                <div class="rwd-card-footer">
+                    <div class="rwd-card-price">KSh 780</div>
+                    <a href="login.php" class="rwd-card-btn">Buy</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Banner -->
+<div class="rwd-banner">
+    <h2>Ready to start shopping?</h2>
+    <p>Join thousands of happy customers across Kenya.</p>
+    <a href="register.php" class="btn-white">Create free account</a>
+</div>
+
+<!-- Footer -->
+<footer class="rwd-footer">
+    <div class="rwd-footer-grid">
+        <div>
+            <h3>Alnoor Store</h3>
+            <p>Your one-stop destination for quality products across Kenya.</p>
+            <p style="margin-top:8px; color:#a8c986; font-size:12px;">BIT3208 Capstone Project</p>
+        </div>
+        <div>
+            <h3>Quick Links</h3>
+            <a href="#">Home</a>
+            <a href="#">Products</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div>
+            <h3>Categories</h3>
+            <a href="#">Electronics</a>
+            <a href="#">Fashion</a>
+            <a href="#">Home & Living</a>
+            <a href="#">Groceries</a>
+        </div>
+        <div>
+            <h3>Account</h3>
+            <a href="login.php">Sign in</a>
+            <a href="register.php">Register</a>
+            <a href="dashboard.php">Dashboard</a>
+        </div>
+    </div>
+    <div class="rwd-footer-bottom">
+        © 2025 Alnoor Store. All rights reserved.
+    </div>
+</footer>
+
+<script>
+    // ── Hamburger toggle ──
+    function toggleNav() {
+        const nav = document.getElementById('rwd-nav');
+        nav.classList.toggle('open');
+    }
+
+    // ── Close nav on link click (mobile) ──
+    document.querySelectorAll('.rwd-nav a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            document.getElementById('rwd-nav').classList.remove('open');
+        });
+    });
+
+    // ── Category pill active state ──
+    document.querySelectorAll('.cat-pill').forEach(function(pill) {
+        pill.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
